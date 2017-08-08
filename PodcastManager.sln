@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastManager", "PodcastManager\PodcastManager.csproj", "{527C1B73-83F1-4201-96CE-A832C51572EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastManager", "PodcastManager\PodcastManager.csproj", "{01433FEA-6AF9-42CC-BB91-C4313AF848BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{527C1B73-83F1-4201-96CE-A832C51572EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{527C1B73-83F1-4201-96CE-A832C51572EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{527C1B73-83F1-4201-96CE-A832C51572EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{527C1B73-83F1-4201-96CE-A832C51572EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01433FEA-6AF9-42CC-BB91-C4313AF848BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01433FEA-6AF9-42CC-BB91-C4313AF848BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01433FEA-6AF9-42CC-BB91-C4313AF848BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01433FEA-6AF9-42CC-BB91-C4313AF848BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

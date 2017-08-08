@@ -1,0 +1,33 @@
+﻿{
+  "DataFolder": "E:\\Podcasts",
+  "MaxItemsPerFeed": 5,
+  "Feeds": [
+    {
+      "Url": "http://feeds.tsf.pt/semmoderacao"
+    },
+    {
+      "Url": "http://feeds.tsf.pt/Tsf-GovernoSombra-Podcast"
+    },
+    {
+      "Url": "http://feeds.tsf.pt/Tsf-HistoriasJustica"
+    },
+    {
+      "Url": "http://feeds.wnyc.org/radiolab"
+    },
+    {
+      "Url": "http://feeds.tsf.pt/politicapura"
+    },
+    {
+      "Url": "http://feeds.tsf.pt/Tsf-ReportagemTsf"
+    },
+    {
+      "Url": "http://www.rtp.pt/play/itunes/2086"
+    },
+    {
+      "Url": "http://www.rtp.pt/play/itunes/283"
+    },
+    {
+      "Url": "http://www.rtp.pt/play/itunes/309"
+    }
+  ]
+}
