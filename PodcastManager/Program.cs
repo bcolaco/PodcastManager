@@ -38,45 +38,52 @@ namespace PodcastManager
                     var dirInfo = Directory.CreateDirectory(directory);
                 }
 
-                var rssData = webClient.DownloadString(feed.Url).Trim(new char[] { '\0' });
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(rssData);
-
-                Console.WriteLine(xmlDoc.SelectSingleNode("/rss/channel/title").InnerText);
-                int itemCount = 0;
-                foreach (XmlNode item in xmlDoc.SelectNodes("/rss/channel/item"))
+                try
                 {
-                    var urlItem = item["media:content"] ?? item["enclosure"];
-                    if (urlItem != null)
+                    var rssData = webClient.DownloadString(feed.Url).Trim(new char[] { '\0' });
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.LoadXml(rssData);
+
+                    Console.WriteLine(xmlDoc.SelectSingleNode("/rss/channel/title").InnerText);
+                    int itemCount = 0;
+                    foreach (XmlNode item in xmlDoc.SelectNodes("/rss/channel/item"))
                     {
-                        var link = urlItem.Attributes["url"].Value;
-                        var itemUri = new Uri(link);
-                        var fileName = GetFileName(itemUri);
-
-                        if (!feed.Downloaded.Contains(fileName))
+                        var urlItem = item["media:content"] ?? item["enclosure"];
+                        if (urlItem != null)
                         {
-                            var itemPath = Path.Combine(directory, fileName);
+                            var link = urlItem.Attributes["url"].Value;
+                            var itemUri = new Uri(link);
+                            var fileName = GetFileName(itemUri);
 
-
-                            if (File.Exists(itemPath))
+                            if (!feed.Downloaded.Contains(fileName))
                             {
-                                Console.WriteLine("Deleting file from ");
-                                File.Delete(itemPath);
-                            }
+                                var itemPath = Path.Combine(directory, fileName);
 
-                            if (itemCount < (feed.MaxItems ?? config.MaxItemsPerFeed))
-                            {
-                                Console.WriteLine(item["title"].InnerText);
-                                webClient.DownloadFile(link, itemPath);
-                                feed.Downloaded.Add(fileName);
-                                itemCount += 1;
+
+                                if (File.Exists(itemPath))
+                                {
+                                    Console.WriteLine("Deleting file from ");
+                                    File.Delete(itemPath);
+                                }
+
+                                if (itemCount < (feed.MaxItems ?? config.MaxItemsPerFeed))
+                                {
+                                    Console.WriteLine(item["title"].InnerText);
+                                    webClient.DownloadFile(link, itemPath);
+                                    feed.Downloaded.Add(fileName);
+                                    itemCount += 1;
+                                }
                             }
-                        }
-                        else
-                        {
-                            break;
+                            else
+                            {
+                                break;
+                            }
                         }
                     }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
                 }
             }
 
