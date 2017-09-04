@@ -44,7 +44,8 @@ namespace PodcastManager
                     XmlDocument xmlDoc = new XmlDocument();
                     xmlDoc.LoadXml(rssData);
 
-                    Console.WriteLine(xmlDoc.SelectSingleNode("/rss/channel/title").InnerText);
+                    feed.Title = xmlDoc.SelectSingleNode("/rss/channel/title").InnerText;
+                    Console.WriteLine(feed.Title);
                     int itemCount = 0;
                     foreach (XmlNode item in xmlDoc.SelectNodes("/rss/channel/item"))
                     {
