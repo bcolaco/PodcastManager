@@ -1,27 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NLog;
+using System;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace PodcastManager
 {
     class Program
     {
-        /*private const string DataFolder = @"D:\Podcasts";
-        private const int MaxItemsPerFeed = 1;
-
-        private static string[] FeedUrls = new string[] {
-            @"http://feeds.tsf.pt/semmoderacao",
-            @"http://feeds.tsf.pt/Tsf-GovernoSombra-Podcast",
-            @"http://feeds.tsf.pt/Tsf-HistoriasJustica",
-            @"http://feeds.wnyc.org/radiolab"
-        };*/
-
         const string ConfigurationFileName = "configuration.json";
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         static void Main(string[] args)
         {
@@ -45,7 +34,7 @@ namespace PodcastManager
                     xmlDoc.LoadXml(rssData);
 
                     feed.Title = xmlDoc.SelectSingleNode("/rss/channel/title").InnerText;
-                    Console.WriteLine(feed.Title);
+                    logger.Info($"Updating \"{feed.Title}\"");
                     int itemCount = 0;
                     foreach (XmlNode item in xmlDoc.SelectNodes("/rss/channel/item"))
                     {
@@ -63,13 +52,13 @@ namespace PodcastManager
 
                                 if (File.Exists(itemPath))
                                 {
-                                    Console.WriteLine("Deleting file from ");
+                                    logger.Warn($"Deleting file {itemPath}");
                                     File.Delete(itemPath);
                                 }
 
                                 if (itemCount < (feed.MaxItems ?? config.MaxItemsPerFeed))
                                 {
-                                    Console.WriteLine(item["title"].InnerText);
+                                    logger.Info($"Downloading episode \"{item["title"].InnerText}\"");
                                     webClient.DownloadFile(link, itemPath);
                                     feed.Downloaded.Add(fileName);
                                     itemCount += 1;
@@ -84,16 +73,23 @@ namespace PodcastManager
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine($"ERROR: {ex.Message}");
+                    logger.Error(ex);
                 }
             }
 
-            File.WriteAllText(
-                ConfigurationFileName,
-                Newtonsoft.Json.JsonConvert.SerializeObject(
-                    config,
-                    Newtonsoft.Json.Formatting.Indented,
-                    new Newtonsoft.Json.JsonSerializerSettings() { NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore }));
+            try
+            {
+                File.WriteAllText(
+                    ConfigurationFileName,
+                    Newtonsoft.Json.JsonConvert.SerializeObject(
+                        config,
+                        Newtonsoft.Json.Formatting.Indented,
+                        new Newtonsoft.Json.JsonSerializerSettings() { NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore }));
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex);
+            }
         }
 
         private static string GetFileName(Uri uri)
