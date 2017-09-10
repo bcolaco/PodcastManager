@@ -6,10 +6,10 @@ This project is a very basic podcast manager that aims to solve a very specific 
 ## The Problem
 I own a 2010 Fiat Bravo and I spend a lot of time driving it.
 Also, I like to use my commuting time listening to podcasts.
-The car is equipped with a basic entertaining system called Blue&amp;Me, which allows me to plug in a USB thumb drive and play any MP3 files it contains. But it lacks all the remainig features for managing podcasts.
+The car is equipped with a basic entertainment system called Blue&amp;Me, which allows me to plug in a USB thumb drive and play any MP3 files it contains. But it lacks all the remainig features for managing podcasts.
 
 ## The Solution
-The solution is to add to my USB thumb drive a very simple application that allows me to automate as much as possible the the podcast management to listen while I'm driving.
+The solution is to add to my USB thumb drive a very simple application that allows me to automate as much as possible the podcast management to listen while I'm driving.e podcast management to listen while I'm driving.
 
 ### The Process
 Managing podcasts consists of the following steps:
