@@ -1,6 +1,8 @@
 # Podcast Manager
 This project is a very basic podcast manager that aims to solve a very specific problem.
 
+[![Build Status](https://travis-ci.org/bcolaco/PodcastManager.svg?branch=master)](https://travis-ci.org/bcolaco/PodcastManager)
+
 ## The Problem
 I own a 2010 Fiat Bravo and I spend a lot of time driving it.
 Also, I like to use my commuting time listening to podcasts.
