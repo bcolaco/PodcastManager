@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastManager", "PodcastManager\PodcastManager.csproj", "{1EE08BEC-C462-4D86-B195-72EDDCB97962}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastManager", "src\PodcastManager\PodcastManager.csproj", "{1EE08BEC-C462-4D86-B195-72EDDCB97962}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastManager.Tests", "PodcastManager.Tests\PodcastManager.Tests.csproj", "{7E4C0BBD-17F1-4722-9686-AAE612E6F0C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastManager.Tests", "tests\PodcastManager.Tests\PodcastManager.Tests.csproj", "{7E4C0BBD-17F1-4722-9686-AAE612E6F0C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
