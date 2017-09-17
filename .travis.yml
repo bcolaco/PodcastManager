@@ -3,6 +3,19 @@ dist: trusty
 sudo: required
 mono: none
 dotnet: 2.0.0
+solution: PodcastManager.sln
+install:
+  - nuget restore PodcastManager.sln
+  - nuget install xunit.runners -OutputDirectory testrunner
 script:
   - ./build.sh --quiet verify
   - ./test.sh
+deploy:
+  provider: releases
+  api_key: "6c41922893185d1c91ed8c58dea239a52c1887c9"
+  file: "src/PodcastManager/bin/Release/PodcastManager.dll"
+  skip_cleanup: true
+  on:
+    repo: bcolaco/PodcastManager
+    tags: true
+ 

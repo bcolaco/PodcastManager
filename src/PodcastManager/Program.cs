@@ -5,7 +5,7 @@ namespace PodcastManager
 {
     class Program
     {
-        const string ConfigurationFileName = "";
+        const string ConfigurationFileName = "configuration.json";
 
         static void Main(string[] args)
         {
