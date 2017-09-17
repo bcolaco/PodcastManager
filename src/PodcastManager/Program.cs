@@ -9,10 +9,11 @@ namespace PodcastManager
 
         static void Main(string[] args)
         {
+            var fileSystem = new FileSystem();
             Configuration configuration;
             try
             {
-                configuration = Configuration.LoadFromFile(ConfigurationFileName);
+                configuration = Configuration.LoadFromFile(fileSystem, ConfigurationFileName);
             }
             catch(Exception ex)
             {

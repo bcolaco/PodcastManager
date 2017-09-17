@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using System.Linq;
 
 namespace PodcastManager
 {
@@ -16,6 +17,41 @@ namespace PodcastManager
         public Feed(IWebClient webClient)
         {
             this.webClient = webClient;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var objFeed = obj as Feed;
+            if(objFeed != null)
+            {
+                return
+                    string.Equals(Title, objFeed.Title) &&
+                    string.Equals(Url, objFeed.Url) &&
+                    string.Equals(MaximumItems, objFeed.MaximumItems) &&
+                    Enumerable.SequenceEqual(DownloadedItems, objFeed.DownloadedItems);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            // Adapted from http://www.loganfranken.com/blog/692/overriding-equals-in-c-part-2/
+            unchecked
+            {
+                // Choose large primes to avoid hashing collisions
+                const int HashingBase = (int) 2166136261;
+                const int HashingMultiplier = 16777619;
+
+                int hash = HashingBase;
+                hash = (hash * HashingMultiplier) ^ (!object.ReferenceEquals(null, Title) ? Title.GetHashCode() : 0);
+                hash = (hash * HashingMultiplier) ^ (!object.ReferenceEquals(null, Url) ? Url.GetHashCode() : 0);
+                hash = (hash * HashingMultiplier) ^ (!object.ReferenceEquals(null, MaximumItems) ? MaximumItems.GetHashCode() : 0);
+                hash = (hash * HashingMultiplier) ^ (!object.ReferenceEquals(null, DownloadedItems) ? DownloadedItems.GetHashCode() : 0);
+                return hash;
+            }
         }
 
         public void Update(Configuration configuration)
