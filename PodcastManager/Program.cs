@@ -12,68 +12,71 @@ namespace PodcastManager
 
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        public static WebClient WebClient = new WebClient();
+
         static void Main(string[] args)
         {
             var config = Newtonsoft.Json.JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(ConfigurationFileName));
 
-            WebClient webClient = new WebClient();
-
-            foreach (var feed in config.Feeds)
+            using (var webClient = new WebClient())
             {
-                Uri uri = new Uri(feed.Url);
-                string directory = Path.Combine(config.DataFolder, uri.Host);
-                if (!Directory.Exists(directory))
+                foreach (var feed in config.Feeds)
                 {
-                    var dirInfo = Directory.CreateDirectory(directory);
-                }
-
-                try
-                {
-                    var rssData = webClient.DownloadString(feed.Url).Trim(new char[] { '\0' });
-                    XmlDocument xmlDoc = new XmlDocument();
-                    xmlDoc.LoadXml(rssData);
-
-                    feed.Title = xmlDoc.SelectSingleNode("/rss/channel/title").InnerText;
-                    logger.Info($"Updating \"{feed.Title}\"");
-                    int itemCount = 0;
-                    foreach (XmlNode item in xmlDoc.SelectNodes("/rss/channel/item"))
+                    Uri uri = new Uri(feed.Url);
+                    string directory = Path.Combine(config.DataFolder, uri.Host);
+                    if (!Directory.Exists(directory))
                     {
-                        var urlItem = item["media:content"] ?? item["enclosure"];
-                        if (urlItem != null)
+                        logger.Trace($"Creating directory {directory}");
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    try
+                    {
+                        XmlDocument xmlDoc = new XmlDocument();
+                        xmlDoc.LoadXml(feed.DownloadFeed());
+
+                        feed.Title = xmlDoc.SelectSingleNode("/rss/channel/title").InnerText;
+                        logger.Info($"Updating \"{feed.Title}\"");
+                        int itemCount = 0;
+                        foreach (XmlNode item in xmlDoc.SelectNodes("/rss/channel/item"))
                         {
-                            var link = urlItem.Attributes["url"].Value;
-                            var itemUri = new Uri(link);
-                            var fileName = GetFileName(itemUri);
-
-                            if (!feed.Downloaded.Contains(fileName))
+                            var urlItem = item["media:content"] ?? item["enclosure"];
+                            if (urlItem != null)
                             {
-                                var itemPath = Path.Combine(directory, fileName);
+                                var link = urlItem.Attributes["url"].Value;
+                                var itemUri = new Uri(link);
+                                var fileName = GetFileName(itemUri);
 
-
-                                if (File.Exists(itemPath))
+                                if (!feed.Downloaded.Contains(fileName))
                                 {
-                                    logger.Warn($"Deleting file {itemPath}");
-                                    File.Delete(itemPath);
-                                }
+                                    var itemPath = Path.Combine(directory, fileName);
 
-                                if (itemCount < (feed.MaxItems ?? config.MaxItemsPerFeed))
-                                {
-                                    logger.Info($"Downloading episode \"{item["title"].InnerText}\"");
-                                    webClient.DownloadFile(link, itemPath);
-                                    feed.Downloaded.Add(fileName);
-                                    itemCount += 1;
+
+                                    if (File.Exists(itemPath))
+                                    {
+                                        logger.Warn($"Deleting file {itemPath}");
+                                        File.Delete(itemPath);
+                                    }
+
+                                    if (itemCount < (feed.MaxItems ?? config.MaxItemsPerFeed))
+                                    {
+                                        logger.Info($"Downloading episode \"{item["title"].InnerText}\"");
+                                        webClient.DownloadFile(link, itemPath);
+                                        feed.Downloaded.Add(fileName);
+                                        itemCount += 1;
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                break;
+                                else
+                                {
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-                catch(Exception ex)
-                {
-                    logger.Error(ex);
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex);
+                    }
                 }
             }
 
