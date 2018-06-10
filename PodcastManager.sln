@@ -3,9 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastManagerConsole", "PodcastManagerConsole\PodcastManagerConsole.csproj", "{01433FEA-6AF9-42CC-BB91-C4313AF848BD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastManager", "PodcastManager\PodcastManager.csproj", "{1D0F909C-DD3A-4C6E-AEEE-02F706038BD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C4FDB5E-169B-4CBE-A7B7-6DBA37803D79}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +16,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{01433FEA-6AF9-42CC-BB91-C4313AF848BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01433FEA-6AF9-42CC-BB91-C4313AF848BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01433FEA-6AF9-42CC-BB91-C4313AF848BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01433FEA-6AF9-42CC-BB91-C4313AF848BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D0F909C-DD3A-4C6E-AEEE-02F706038BD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D0F909C-DD3A-4C6E-AEEE-02F706038BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D0F909C-DD3A-4C6E-AEEE-02F706038BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
